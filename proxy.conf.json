@@ -1,0 +1,12 @@
+{
+  "/api": {
+    "target": "https://proxyapp.correios.com.br",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
+   
+  
