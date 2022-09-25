@@ -1,15 +1,11 @@
-<div class="container w-100">
-  <div>
-
-    <h3></h3>
-  </div>
+<div class="container p-3 pt-5 w-100">
   <mat-card>
     <mat-card-header>
       <mat-card-title >Rastreio de Objetos</mat-card-title>
       <mat-card-subtitle>Saiba aonde está seus objetos enviados pelos Correios de uma vez! Sem Captcha, sem verificações!</mat-card-subtitle>
 
     </mat-card-header>
-    <div class="card-body-content">
+    <div class="card-body-content mb-3">
       <form [formGroup]="form">
         <div class="row">
           <div class="col-md-6">
@@ -21,14 +17,14 @@
         </div>
         <div class="row">
           <div class="col-md-4">
-            <button mat-button type="submit" class="btn btn-primary" (click)="consulta()">Rastrear</button>
+            <button mat-button type="submit" class="btn btn-primary" (click)="consulta(true)">Rastrear</button>
           </div>
         </div>
       </form>
 
     </div>
     
-    <div *ngIf="dadosRastreio">
+    <div class="mt-5" *ngIf="dadosRastreio.objetos.length>0">
       <app-rastreio [rastreio]="dadosRastreio"></app-rastreio>
 
     </div>

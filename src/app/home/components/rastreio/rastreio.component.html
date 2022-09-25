@@ -1,3 +1,58 @@
 <div class="" *ngIf="rastreio">
-    {{rastreio[0].codObjeto}}
+   
+</div>
+
+
+
+<div class="container padding-bottom-3x mb-1">
+    <div class="card mb-3">
+        <div class="p-4 text-center text-white text-lg bg-dark rounded-top">
+            <span class="text-uppercase">Objeto Nº - {{rastreio.objetos[0].codObjeto}}</span>
+        </div>
+        <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
+            <div class="w-100 text-center py-1 px-2">
+                <span class="text-medium">Status: {{rastreio.objetos[0].eventos.at(-1).descricao}}</span> 
+            </div>
+
+            <div class="w-100 text-center py-1 px-2">
+                <span class="text-medium">
+                    Data última atualização: {{rastreio.objetos[0].eventos.at(-1).dtHrCriado | date:'dd/MM/yy HH:mm'}}
+                </span> 
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x pt-4">
+
+
+                <div class="step completed"   *ngFor="let evento of retornoDTO.etapas;index as i" >
+                    <div class="step-icon-wrap "    *ngIf="i==0"  >
+                        <div class="step-icon" matRipple >
+                            <fa-icon [icon]="['fas','truck-ramp-box']"></fa-icon>
+                        </div>
+                    </div>
+                    <div class="step-icon-wrap" *ngIf="i>0">
+                        <div class="step-icon " matBadge="{{evento.eventos.length}}" matRipple [matRippleCentered]="true" [matRippleRadius]="40" >
+                            <fa-icon  [icon]="i== evento.eventos.length -1 ?['fas','truck-fast']:['fas','truck']"></fa-icon>
+                        </div>
+                    </div>
+                    <h4 class="step-title">{{evento.cidade}}</h4>
+                </div>
+
+
+                <div class="step" [ngClass]="entregue?'completed':''">
+                    <div class="step-icon-wrap">
+                        <div class="step-icon"><fa-icon [icon]="entregue?['fas','check']:['fas','ellipsis']"></fa-icon></div>
+                    </div>
+                    <h4 *ngIf="entregue" class="step-title">Produto Entregue!</h4>
+                    <h4 *ngIf="!entregue" class="step-title">{{emRotaDeEntrega?'Saiu para entrega':'Objeto Em Transito'}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3 mb-1">
+            <p>
+                Última consulta realizada: {{date| date:'dd/MM/yy - HH:mm'}}
+
+            </p>
+        </div>
+    </div>
 </div>

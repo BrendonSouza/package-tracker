@@ -9,7 +9,7 @@ export interface Objeto{
     eventos: Evento[]
 }
 
-interface Evento{
+export interface Evento{
     codigo: string,
     descricao: string,
     dtHrCriado: string,
@@ -22,5 +22,6 @@ interface Unidade{
         cidade: string,
         uf: string
     },
+    nome?: string
     tipo: string
 }

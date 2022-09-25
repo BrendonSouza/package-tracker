@@ -1,6 +1,8 @@
+import { ErroDialogComponent } from './components/erro-dialog/erro-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DadosRastreio } from './../models/dados-rastreio';
 import { StorageService } from './../services/storage.service';
-import { Rastreio } from './../models/rastreio';
+import { Rastreio, Objeto } from './../models/rastreio';
 import { ConsultaRastreioService } from './../services/consulta-rastreio.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,23 +15,58 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class HomeComponent implements OnInit {
   form: FormGroup
   resultado: any;
-  dadosRastreio: DadosRastreio
-  constructor(private fb: FormBuilder, private service: ConsultaRastreioService, private storage: StorageService) { }
+  dadosRastreio: DadosRastreio = {
+    objetos: []
+  }
+  constructor(
+    private fb: FormBuilder,
+    private service: ConsultaRastreioService,
+    private storage: StorageService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      codigo: ['']
-    })
-    if(this.storage.get('codigo')){
-      console.log(this.storage.get('codigo'))
+    if (this.storage.get('codigo')) {
+      this.form = this.fb.group({
+        codigo: [this.storage.get('codigo')]
+      })
+      this.consulta(false)
+    }
+    else {
+      this.form = this.fb.group({
+        codigo: ['']
+      })
     }
   }
 
-  consulta() {
-    this.storage.set('codigo', this.form.get('codigo').value)
+  consulta(isClick?: boolean) {
+    if (isClick) {
+      this.dadosRastreio.objetos = []
+    }
     this.service.rastreio(this.form.get('codigo').value).subscribe((res) => {
-      this.dadosRastreio = res.objetos
+      res.objetos.forEach((objeto: Objeto) => {
+        var objeto: Objeto
+        if (objeto.eventos) {
+          objeto.eventos = objeto.eventos.reverse()
+          objeto.codObjeto = objeto.codObjeto
+          this.dadosRastreio.objetos.push(objeto)
+          this.storage.set('codigo', this.form.get('codigo').value)
+        }
+        else {
+          this.dadosRastreio.objetos = []
+          this.storage.clear()
+          this.openDialog()
+          this.form = this.fb.group({
+            codigo: ['']
+          })
+        }
+      })
+
     })
-    console.log(this.dadosRastreio)
+  }
+
+
+  openDialog() {
+    this.dialog.open(ErroDialogComponent)
   }
 }
