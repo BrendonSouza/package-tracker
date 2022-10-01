@@ -15,8 +15,9 @@ import { faCheck, faCheckDouble, faClose, faEllipsis, faSearch, faTruck, faTruck
 import { MatRippleModule } from '@angular/material/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ErroDialogComponent } from './components/erro-dialog/erro-dialog.component';
+import { DialogMoreInfoComponent } from './components/dialog-more-info/dialog-more-info.component';
 @NgModule({
-  declarations: [HomeComponent, RastreioComponent, ErroDialogComponent],
+  declarations: [HomeComponent, RastreioComponent, ErroDialogComponent, DialogMoreInfoComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

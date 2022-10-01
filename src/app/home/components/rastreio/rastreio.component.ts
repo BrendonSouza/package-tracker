@@ -1,6 +1,9 @@
+import { DialogMoreInfoComponent } from './../dialog-more-info/dialog-more-info.component';
 import { RetornoDto } from './../../../models/retorno-dto';
 import { DadosRastreio } from './../../../models/dados-rastreio';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-rastreio',
@@ -8,7 +11,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   styleUrls: ['./rastreio.component.scss']
 })
 export class RastreioComponent implements OnInit, OnChanges {
-
+  
+  @Input() rastreio: DadosRastreio
   date = new Date()
   map = new Map()
   ultimoEvento: string
@@ -19,8 +23,9 @@ export class RastreioComponent implements OnInit, OnChanges {
   }
   entregue: boolean = false
   emRotaDeEntrega: boolean = false
-  @Input() rastreio: DadosRastreio
-  constructor() { }
+
+  
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
   }
@@ -51,7 +56,10 @@ export class RastreioComponent implements OnInit, OnChanges {
     if (this.ultimoEvento == 'Objeto saiu para entrega ao destinatário') {
       this.emRotaDeEntrega = true
     }
-  }
 
+    
+  }
+  openDialog() {
+    this.dialog.open(DialogMoreInfoComponent)}
 
 }

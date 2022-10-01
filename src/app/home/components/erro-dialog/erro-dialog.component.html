@@ -17,9 +17,13 @@
         </div>
         <div class="col-12 d-flex justify-content-center ">
 
-            <p>
+            <p *ngIf="!data.statusErro">
                 O código de rastreio informado não foi encontrado ou o objeto ainda não foi postado.
            </p> 
+           <p *ngIf="data.statusErro">
+                Falha ao se comunicar com os servidores... Por favor aguarde!
+            </p>
+
         </div>
     </div>
 

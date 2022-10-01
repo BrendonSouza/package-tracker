@@ -6,6 +6,7 @@ import { Rastreio, Objeto } from './../models/rastreio';
 import { ConsultaRastreioService } from './../services/consulta-rastreio.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -61,12 +62,23 @@ export class HomeComponent implements OnInit {
           })
         }
       })
+       
 
+    },
+    (err:HttpErrorResponse) => { 
+      this.openDialog(err.status)
+      this.form = this.fb.group({
+        codigo: ['']
+      })
     })
   }
 
 
-  openDialog() {
-    this.dialog.open(ErroDialogComponent)
+  openDialog(erro?:any) {
+    this.dialog.open(ErroDialogComponent,{
+      data: {
+        statusErro: erro,
+      },
+    })
   }
 }
